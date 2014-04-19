@@ -1,0 +1,34 @@
+** models generated for blending ****
+
+# Data: ConvNet__2014-03-29_07.47.35_VALID_182.59_data_train_1_60416_valid_60417_61578_test_61579_end.mat
+
+1	:  NNet hyperparameters:	
+	opt.l1_penalty		= 1e-4;
+	opt.l2_penalty		= 1e-7;
+	opt.report_interval	= 10;
+	opt.nIters			= 1000;
+	opt.HiddenSize		= 30;    
+	opt.nConts			= 5; 	
+	opt.MaxNorm			= 1;	
+	opt.norm_penalty	= 1;
+
+
+2	: NNet hyperparameters:
+
+	opt.l1_penalty		= 0;
+	opt.l2_penalty		= 1e-7;
+	opt.report_interval	= 10;
+	opt.nIters			= 1000;
+	opt.HiddenSize		= 50;    
+	opt.nConts			= 20; 	
+	opt.MaxNorm			= 1;	
+	opt.norm_penalty	= 1;
+
+
+3	: same as (2), use (data > 0);
+4	: same as (2), use sqrt(data);
+5	: same as (2), use (data)^2;
+6	: same as (2), add 10% noise to data
+7	: same as (2), use first 50% features
+8	: same as (2), use first 50% data
+
