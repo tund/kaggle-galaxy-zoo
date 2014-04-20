@@ -28,7 +28,7 @@
 % 	blend several models trained in the refinement phase
 %
 
-load('label'); %the matrix of train/valid outcomes, one row per image
+% load('label'); %the matrix of train/valid outcomes, one row per image
 
 
 rng(6789);

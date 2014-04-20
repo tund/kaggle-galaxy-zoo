@@ -29,8 +29,8 @@
 %
 
 
-load('convnet_features'); %matrix of train/valid/test features extracted from the ConvNets, one row per image
-load('label'); %the matrix of train/valid outcomes, one row per image
+% load('convnet_features'); %matrix of train/valid/test features extracted from the ConvNets, one row per image
+% load('label'); %the matrix of train/valid outcomes, one row per image
 
 
 % reconstruction/prediction

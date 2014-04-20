@@ -101,7 +101,9 @@ Step 3
 
 This step and the next are run in *matlab* (tested on version 2013)
 
-3a. Load the features generated from the ConvNet in the file `./refine/convnet_features.mat`
+3a. Load the features generated from the ConvNet:
+
+	load('./refine/convnet_features.mat')
 
 3b. Run `refine/refine.m` several times to create multiple models, see `refine/models.txt` for details
 
