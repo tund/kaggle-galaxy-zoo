@@ -6,7 +6,7 @@ This code helps to land the third place in [Galaxy Zoo challenge](https://www.ka
 There are several main steps:
 
 	1. Split randomly the training data into model development (98%) and validation subsets (2%)
-	2. Extract features using ConvNet on all data
+	2. Train ConvNet on model development data, and extract features from the last hidden layer for all data
 	3. Train multiple neural networks using a small portion of development data and about half of validation data
 	4. Blend multiple neural networks using another neural network
 	5. Average several models from steps 2, 3 and 4. Models chosen are based on their performance on the public leaderboard.

@@ -22,11 +22,14 @@
 % NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 % EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-% 
+
+
+%  	
+% 	blend several models trained in the refinement phase
 %
-% Blend several models trained in the refinement phase
-%
-%
+
+load('label'); %the matrix of train/valid outcomes, one row per image
+
 
 rng(6789);
 start = tic();
@@ -46,11 +49,11 @@ if 1 %load outcomes of NNets in the refinement step
 	clear validData0;
 
 	j = 0;
-	for d=[1:8]
+	for modelId=[1:8]
 		j = j + 1;
-		trainData0{j}	= load(['predicts/trainPredicts' num2str(d) '.csv']);
-		validData0{j}	= load(['predicts/validPredicts' num2str(d) '.csv']);
-		testData0{j}	= load(['predicts/testPredicts' num2str(d) '.csv']);
+		trainData0{j}	= load(['predicts/trainPredicts' num2str(modelId) '.csv']);
+		validData0{j}	= load(['predicts/validPredicts' num2str(modelId) '.csv']);
+		testData0{j}	= load(['predicts/testPredicts' num2str(modelId) '.csv']);
 	end
 
 	disp(['Loading time ' num2str(round(toc(start)))]);
@@ -58,7 +61,7 @@ end
 
 %return;
 
-WeakLearner = length(trainData0);
+ModelNo = length(trainData0);
 
 if 1 %normalizing the data
 	disp('Prepare data');
@@ -86,11 +89,11 @@ if 1 %normalizing the data
 		testData{k}		= [];
 	end
 	
-	for d=1:WeakLearner
+	for modelId=1:ModelNo
 		for k=1:taskSize
-			trainData{k} 	= [trainData{k}, trainData0{d}(:,k)];
-			validData{k} 	= [validData{k}, validData0{d}(:,k)];
-			testData{k}		= [testData{k}, testData0{d}(:,k)];
+			trainData{k} 	= [trainData{k}, trainData0{modelId}(:,k)];
+			validData{k} 	= [validData{k}, validData0{modelId}(:,k)];
+			testData{k}		= [testData{k}, testData0{modelId}(:,k)];
 		end		
 	end
 
@@ -144,16 +147,16 @@ testPredicts	= zeros(testSize,taskSize);
 
 for k=1:taskSize
 
-	fprintf('Outcome %d...\n',k);
+	fprintf('Outcome %modelId...\n',k);
 
 	%easy tasks, don't have to learn, just averaging...
 	if 1
 		if ismember(k,[1,2,4,5,6,8,14:19,24,26,28,33])
-			for d=1:WeakLearner
-				trainPredicts(:,k)	= trainPredicts(:,k) + trainData0{d}(:,k)/WeakLearner;
-				validPredicts1(:,k)	= validPredicts1(:,k) + validData0{d}(validIds1,k)/WeakLearner;
-				validPredicts2(:,k)	= validPredicts2(:,k) + validData0{d}(validIds2,k)/WeakLearner;
-				testPredicts(:,k)	= testPredicts(:,k) + testData0{d}(:,k)/WeakLearner;
+			for modelId=1:ModelNo
+				trainPredicts(:,k)	= trainPredicts(:,k) + trainData0{modelId}(:,k)/ModelNo;
+				validPredicts1(:,k)	= validPredicts1(:,k) + validData0{modelId}(validIds1,k)/ModelNo;
+				validPredicts2(:,k)	= validPredicts2(:,k) + validData0{modelId}(validIds2,k)/ModelNo;
+				testPredicts(:,k)	= testPredicts(:,k) + testData0{modelId}(:,k)/ModelNo;
 			end
 
 			continue;
@@ -169,7 +172,7 @@ for k=1:taskSize
 			trainIds1 = [1:D];
 			validIds1x = [1:validSize1];
 		else
-			fprintf('Bootstrap %d...\n',b);
+			fprintf('Bootstrap %modelId...\n',b);
 			trainIds1	= randi(trainSize,1,D);
 			validIds1x	= randi(validSize1,1,validSize1);
 		end

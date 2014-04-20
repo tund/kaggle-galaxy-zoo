@@ -28,19 +28,12 @@
 % - Generate several variants for model blending in the next step
 %
 
-%  	1. first load the features trained in the previous ConvNet step
-%		- "data" is the matrix of train/valid/test features stacked
-%	2. then refine the model with additional NNet as follows:
 
-
-load('train_idx'); %train-idx is a pre-defined permutation of training data
-load('label'); %outcomes in training data
-
-devIds = 1+train_idx;
+load('convnet_features'); %matrix of train/valid/test features extracted from the ConvNets, one row per image
+load('label'); %the matrix of train/valid outcomes, one row per image
 
 
 % reconstruction/prediction
-
 % the id of the model being trained -- we train several models for blending later on
 % see the description paper for more details
 modelId = 1; 
